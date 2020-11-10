@@ -34,6 +34,12 @@ namespace FreeType
 		{
 			return error.[Inline]Error;
 		}
+
+		public override void ToString(String strBuffer)
+		{
+			// Todo: check if error strings are activated
+			strBuffer.Append(FreeType.FT_Error_String(this));
+		}
 	}
 
 	typealias FT_Pointer = void*;

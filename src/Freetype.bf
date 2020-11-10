@@ -2,6 +2,129 @@ using System;
 
 namespace FreeType
 {
+	public static class FreeType
+	{
+		[LinkName("FT_Init_FreeType")]
+		public static extern FT_Error Init_FreeType(FT_Library *alibrary);
+		
+		[LinkName("FT_Done_FreeType")]
+		public static extern FT_Error Done_FreeType(FT_Library library);
+
+		[LinkName("FT_New_Face")]
+		public static extern FT_Error New_Face(FT_Library library, char8* filepathname, FT_Long face_index, FT_Face *aface);
+
+		[LinkName("FT_New_Memory_Face")]
+		public static extern FT_Error New_Memory_Face(FT_Library library, FT_Byte* file_base, FT_Long file_size, FT_Long face_index, FT_Face *aface);
+
+		[LinkName("FT_Open_Face")]
+		public static extern FT_Error Open_Face(FT_Library library, FT_Open_Args* args, FT_Long face_index, FT_Face *aface);
+
+		[LinkName("FT_Attach_File")]
+		public static extern FT_Error Attach_File(FT_Face face, uint8* filepathname);
+
+		[LinkName("FT_Attach_Stream")]
+		public static extern FT_Error Attach_Stream(FT_Face face, FT_Open_Args* parameters);
+
+		[LinkName("FT_Reference_Face")]
+		public static extern FT_Error Reference_Face(FT_Face face);
+
+		[LinkName("FT_Done_Face")]
+		public static extern FT_Error Done_Face(FT_Face face);
+
+		[LinkName("FT_Select_Size")]
+		public static extern FT_Error Select_Size(FT_Face face, FT_Int strike_index);
+
+		[LinkName("FT_Request_Size")]
+		public static extern FT_Error Request_Size(FT_Face face, FT_Size_Request req);
+
+		[LinkName("FT_Set_Char_Size")]
+		public static extern FT_Error Set_Char_Size(FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, FT_UInt horz_resolution, FT_UInt vert_resolution);
+
+		[LinkName("FT_Set_Pixel_Sizes")]
+		public static extern FT_Error Set_Pixel_Sizes(FT_Face face, FT_UInt pixel_width, FT_UInt pixel_height);
+
+		[LinkName("FT_Load_Glyph")]
+		public static extern FT_Error Load_Glyph(FT_Face face, FT_UInt glyph_index, LoadFlag load_flags);
+
+		[LinkName("FT_Load_Char")]
+		public static extern FT_Error Load_Char(FT_Face face, /*FT_ULong*/ char32 char_code, LoadFlag load_flags);
+		
+		[LinkName("FT_Set_Transform")]
+		public static extern void Set_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
+
+		[LinkName("FT_Render_Glyph")]
+		public static extern FT_Error Render_Glyph(FT_GlyphSlot slot, FT_Render_Mode render_mode);
+
+		[LinkName("FT_Get_Kerning")]
+		public static extern FT_Error Get_Kerning(FT_Face face, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt kern_mode, FT_Vector *akerning );
+
+		[LinkName("FT_Get_Track_Kerning")]
+		public static extern FT_Error Get_Track_Kerning(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning);
+
+		[LinkName("FT_Get_Glyph_Name")]
+		public static extern FT_Error Get_Glyph_Name(FT_Face face, FT_UInt glyph_index, FT_Pointer buffer, FT_UInt buffer_max);
+
+		[LinkName("FT_Get_Postscript_Name")]
+		public static extern char8* Get_Postscript_Name(FT_Face face);
+
+		[LinkName("FT_Select_Charmap")]
+		public static extern FT_Error Select_Charmap(FT_Face face, FT_Encoding encoding);
+
+		[LinkName("FT_Set_Charmap")]
+		public static extern FT_Error Set_Charmap(FT_Face face, FT_CharMap charmap);
+
+		[LinkName("FT_Get_Charmap_Index")]
+		public static extern FT_Int Get_Charmap_Index(FT_CharMap charmap);
+
+		[LinkName("FT_Get_Char_Index")]
+		public static extern FT_UInt Get_Char_Index(FT_Face face, /*FT_ULong*/ char32 charcode);
+
+		[LinkName("FT_Get_First_Char")]
+		public static extern FT_ULong Get_First_Char(FT_Face face, FT_UInt *agindex);
+
+		[LinkName("FT_Get_Next_Char")]
+		public static extern FT_ULong Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt *agindex);
+
+		[LinkName("FT_Face_Properties")]
+		public static extern FT_Error Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties);
+
+		[LinkName("FT_Get_Name_Index")]
+		public static extern FT_UInt Get_Name_Index(FT_Face face, FT_String* glyph_name);
+
+		[LinkName("FT_Get_SubGlyph_Info")]
+		public static extern FT_Error Get_SubGlyph_Info(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int *p_index, SubglyphFlag *p_flags, FT_Int *p_arg1, FT_Int *p_arg2, FT_Matrix *p_transform);
+
+		[LinkName("FT_Get_Color_Glyph_Layer")]
+		public static extern FT_Bool Get_Color_Glyph_Layer(FT_Face face, FT_UInt base_glyph, FT_UInt *aglyph_index, FT_UInt *acolor_index, FT_LayerIterator* iterator);
+
+		[LinkName("FT_Get_FSType_Flags")]
+		public static extern FSTypeFlag Get_FSType_Flags(FT_Face face);
+
+		[LinkName("FT_Face_GetCharVariantIndex")]
+		public static extern FT_UInt Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
+
+		[LinkName("FT_Face_GetCharVariantIsDefault")]
+		public static extern FT_Int Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
+
+		[LinkName("FT_Face_GetVariantSelectors")]
+		public static extern FT_UInt32* Face_GetVariantSelectors(FT_Face face);
+
+		[LinkName("FT_Face_GetVariantsOfChar")]
+		public static extern FT_UInt32* Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode);
+
+		[LinkName("FT_Face_GetCharsOfVariant")]
+		public static extern FT_UInt32* Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector);
+
+		[LinkName("FT_Library_Version")]
+		public static extern void Library_Version(FT_Library library, FT_Int *amajor, FT_Int *aminor, FT_Int *apatch);
+
+		[LinkName("FT_Face_CheckTrueTypePatents")]
+		public static extern FT_Bool Face_CheckTrueTypePatents(FT_Face face);
+
+		[LinkName("FT_Face_SetUnpatentedHinting")]
+		public static extern FT_Bool Face_SetUnpatentedHinting(FT_Face face, FT_Bool value);
+	}
+
 	//
 	// Basic types
 	//
@@ -102,8 +225,8 @@ namespace FreeType
 		public FT_Long           num_faces;
 		public FT_Long           face_index;
 
-		public FT_Long           face_flags;
-		public FT_Long           style_flags;
+		public FaceFlag          face_flags;
+		public StyleFlag         style_flags;
 
 		public FT_Long           num_glyphs;
 
@@ -150,32 +273,6 @@ namespace FreeType
 	    private FT_Face_Internal  ftinternal;
 
 	}
-
-	static
-	{
-		public const uint32 FT_FACE_FLAG_SCALABLE 			= 1L << 0;
-		public const uint32 FT_FACE_FLAG_FIXED_SIZES 		= 1L << 1;
-		public const uint32 FT_FACE_FLAG_FIXED_WIDTH 		= 1L << 2;
-		public const uint32 FT_FACE_FLAG_SFNT 				= 1L << 3;
-		public const uint32 FT_FACE_FLAG_HORIZONTAL 		= 1L << 4;
-		public const uint32 FT_FACE_FLAG_VERTICAL 			= 1L << 5;
-		public const uint32 FT_FACE_FLAG_KERNING 			= 1L << 6;
-		public const uint32 FT_FACE_FLAG_FAST_GLYPHS 		= 1L << 7;
-		public const uint32 FT_FACE_FLAG_MULTIPLE_MASTERS 	= 1L << 8;
-		public const uint32 FT_FACE_FLAG_GLYPH_NAMES 		= 1L << 9;
-		public const uint32 FT_FACE_FLAG_EXTERNAL_STREAM 	= 1L << 10;
-		public const uint32 FT_FACE_FLAG_HINTER 			= 1L << 11;
-		public const uint32 FT_FACE_FLAG_CID_KEYED 			= 1L << 12;
-		public const uint32 FT_FACE_FLAG_TRICKY 			= 1L << 13;
-		public const uint32 FT_FACE_FLAG_COLOR 				= 1L << 14;
-		public const uint32 FT_FACE_FLAG_VARIATION 			= 1L << 15;
-
-		// Todo methods for flag checking
-
-		public const uint32 FT_STYLE_FLAG_ITALIC = 1 << 0;
-		public const uint32 FT_STYLE_FLAG_BOLD   = 1 << 1;
-	}
-	
 
 	typealias FT_Size_Internal = FT_Size_InternalRec*;
 
@@ -244,21 +341,6 @@ namespace FreeType
 		public FT_Slot_Internal  slot_internal;
 	}
 
-	static
-	{
-		[CLink]
-		public static extern FT_Error FT_Init_FreeType(FT_Library *alibrary);
-	
-		[CLink]
-		public static extern FT_Error FT_Done_FreeType(FT_Library library);
-
-		public const uint32 FT_OPEN_MEMORY = 0x1;
-		public const uint32 FT_OPEN_STREAM = 0x2;
-		public const uint32 FT_OPEN_PATHNAME = 0x4;
-		public const uint32 FT_OPEN_DRIVER = 0x8;
-		public const uint32 FT_OPEN_PARAMS = 0x10;
-	}
-	
 	[CRepr]
 	public struct FT_Parameter
 	{
@@ -269,7 +351,7 @@ namespace FreeType
 	[CRepr]
 	public struct FT_Open_Args
 	{
-		public FT_UInt         flags;
+		public OpenFlag        flags; /*FT_UInt*/
 		public FT_Byte*  	   memory_base;
 		public FT_Long         memory_size;
 		public FT_String*      pathname;
@@ -278,33 +360,6 @@ namespace FreeType
 		public FT_Int          num_params;
 		public FT_Parameter*   ftparams;
 	}
-
-	static
-	{
-		[CLink]
-		public static extern FT_Error FT_New_Face(FT_Library library, char8* filepathname, FT_Long face_index, FT_Face *aface);
-	
-		[CLink]
-		public static extern FT_Error FT_New_Memory_Face(FT_Library library, FT_Byte* file_base, FT_Long file_size, FT_Long face_index, FT_Face *aface);
-		
-		[CLink]
-		public static extern FT_Error FT_Open_Face(FT_Library library, FT_Open_Args* args, FT_Long face_index, FT_Face *aface);
-		
-		[CLink]
-		public static extern FT_Error FT_Attach_File(FT_Face face, uint8* filepathname);
-
-		[CLink]
-		public static extern FT_Error FT_Attach_Stream(FT_Face face, FT_Open_Args* parameters);
-		
-		[CLink]
-		public static extern FT_Error FT_Reference_Face(FT_Face face);
-
-		[CLink]
-		public static extern FT_Error FT_Done_Face(FT_Face face);
-
-		[CLink]
-		public static extern FT_Error FT_Select_Size(FT_Face face, FT_Int strike_index);
-	}	
 
 	public enum FT_Size_Request_Type : uint32
 	{
@@ -329,59 +384,6 @@ namespace FreeType
 
 	typealias FT_Size_Request = FT_Size_RequestRec*;
 
-	static
-	{
-		[CLink]
-		public static extern FT_Error FT_Request_Size(FT_Face face, FT_Size_Request req);
-
-		[CLink]
-		public static extern FT_Error FT_Set_Char_Size(FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, FT_UInt horz_resolution, FT_UInt vert_resolution);
-
-		[CLink]
-		public static extern FT_Error FT_Set_Pixel_Sizes(FT_Face face, FT_UInt pixel_width, FT_UInt pixel_height);
-		
-		[CLink]
-		public static extern FT_Error FT_Load_Glyph(FT_Face face, FT_UInt glyph_index, FT_Int32 load_flags);
-
-		[CLink]
-		public static extern FT_Error FT_Load_Char(FT_Face face, /* FT_ULong*/char32 char_code, FT_Int32  load_flags);
-		
-		public static FT_Int32 FT_LOAD_DEFAULT                     = 0x0;
-		public static FT_Int32 FT_LOAD_NO_SCALE                    = ( 1L << 0 );
-		public static FT_Int32 FT_LOAD_NO_HINTING                  = ( 1L << 1 );
-		public static FT_Int32 FT_LOAD_RENDER                      = ( 1L << 2 );
-		public static FT_Int32 FT_LOAD_NO_BITMAP                   = ( 1L << 3 );
-		public static FT_Int32 FT_LOAD_VERTICAL_LAYOUT             = ( 1L << 4 );
-		public static FT_Int32 FT_LOAD_FORCE_AUTOHINT              = ( 1L << 5 );
-		public static FT_Int32 FT_LOAD_CROP_BITMAP                 = ( 1L << 6 );
-		public static FT_Int32 FT_LOAD_PEDANTIC                    = ( 1L << 7 );
-		public static FT_Int32 FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH = ( 1L << 9 );
-		public static FT_Int32 FT_LOAD_NO_RECURSE                  = ( 1L << 10 );
-		public static FT_Int32 FT_LOAD_IGNORE_TRANSFORM            = ( 1L << 11 );
-		public static FT_Int32 FT_LOAD_MONOCHROME                  = ( 1L << 12 );
-		public static FT_Int32 FT_LOAD_LINEAR_DESIGN               = ( 1L << 13 );
-		public static FT_Int32 FT_LOAD_NO_AUTOHINT                 = ( 1L << 15 );
-		  /* Bits 16-19 are used by `FT_LOAD_TARGET_` */
-		public static FT_Int32 FT_LOAD_COLOR                       = ( 1L << 20 );
-		public static FT_Int32 FT_LOAD_COMPUTE_METRICS             = ( 1L << 21 );
-		public static FT_Int32 FT_LOAD_BITMAP_METRICS_ONLY         = ( 1L << 22 );
-		  /* used internally only by certain font drivers */
-		public static FT_Int32 FT_LOAD_ADVANCE_ONLY                = ( 1L << 8 );
-		public static FT_Int32 FT_LOAD_SBITS_ONLY                  = ( 1L << 14 );
-		
-		//FT_LOAD_TARGET_( x )   ( (FT_Int32)( (x) & 15 ) << 16 )
-
-		public static FT_Int32 FT_LOAD_TARGET_NORMAL = ((.)FT_Render_Mode.FT_RENDER_MODE_NORMAL & 15) << 16; //FT_LOAD_TARGET_( FT_RENDER_MODE_NORMAL )
-		public static FT_Int32 FT_LOAD_TARGET_LIGHT  = ((.)FT_Render_Mode.FT_RENDER_MODE_LIGHT & 15) << 16;//FT_LOAD_TARGET_( FT_RENDER_MODE_LIGHT  )
-		public static FT_Int32 FT_LOAD_TARGET_MONO   = ((.)FT_Render_Mode.FT_RENDER_MODE_MONO & 15) << 16;//FT_LOAD_TARGET_( FT_RENDER_MODE_MONO   )
-		public static FT_Int32 FT_LOAD_TARGET_LCD    = ((.)FT_Render_Mode.FT_RENDER_MODE_LCD & 15) << 16;//FT_LOAD_TARGET_( FT_RENDER_MODE_LCD    )
-		public static FT_Int32 FT_LOAD_TARGET_LCD_V  = ((.)FT_Render_Mode.FT_RENDER_MODE_LCD_V & 15) << 16; //FT_LOAD_TARGET_( FT_RENDER_MODE_LCD_V  )
-
-
-		[CLink]
-		public static extern void FT_Set_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
-	}
-
 	public enum FT_Render_Mode : uint32
 	{
 	  FT_RENDER_MODE_NORMAL = 0,
@@ -393,67 +395,11 @@ namespace FreeType
 	  FT_RENDER_MODE_MAX
 	}
 
-	static
-	{
-		[CLink]
-		public static extern FT_Error FT_Render_Glyph(FT_GlyphSlot slot, FT_Render_Mode render_mode);
-	}
-
 	public enum FT_Kerning_Mode : uint32
 	{
 		FT_KERNING_DEFAULT = 0,
 		FT_KERNING_UNFITTED,
 		FT_KERNING_UNSCALED
-	}
-
-	static
-	{
-		[CLink]
-		public static extern FT_Error FT_Get_Kerning(FT_Face face, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt kern_mode, FT_Vector *akerning );
-
-		[CLink]
-		public static extern FT_Error FT_Get_Track_Kerning(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning);
-
-		[CLink]
-		public static extern FT_Error FT_Get_Glyph_Name(FT_Face face, FT_UInt glyph_index, FT_Pointer buffer, FT_UInt buffer_max);
-
-		[CLink]
-		public static extern char8* FT_Get_Postscript_Name(FT_Face face);
-
-		[CLink]
-		public static extern FT_Error FT_Select_Charmap(FT_Face face, FT_Encoding encoding);
-
-		[CLink]
-		public static extern FT_Error FT_Set_Charmap(FT_Face face, FT_CharMap charmap);
-
-		[CLink]
-		public static extern FT_Int FT_Get_Charmap_Index(FT_CharMap charmap);
-
-		[CLink]
-		public static extern FT_UInt FT_Get_Char_Index(FT_Face face, /*FT_ULong*/ char32 charcode);
-		
-		[CLink]
-		public static extern FT_ULong FT_Get_First_Char(FT_Face face, FT_UInt *agindex);
-
-		[CLink]
-		public static extern FT_ULong FT_Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt *agindex);
-
-		[CLink]
-		public static extern FT_Error FT_Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties);
-
-		[CLink]
-		public static extern FT_UInt FT_Get_Name_Index(FT_Face face, FT_String* glyph_name);
-
-		public const uint32 FT_SUBGLYPH_FLAG_ARGS_ARE_WORDS 	= 1;
-		public const uint32 FT_SUBGLYPH_FLAG_ARGS_ARE_XY_VALUES	= 2;
-		public const uint32 FT_SUBGLYPH_FLAG_ROUND_XY_TO_GRID 	= 4;
-		public const uint32 FT_SUBGLYPH_FLAG_SCALE 				= 8;
-		public const uint32 FT_SUBGLYPH_FLAG_XY_SCALE 			= 0x40;
-		public const uint32 FT_SUBGLYPH_FLAG_2X2 				= 0x80;
-		public const uint32 FT_SUBGLYPH_FLAG_USE_MY_METRICS 	= 0x200;
-
-		[CLink]
-		public static extern FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int *p_index, FT_UInt *p_flags, FT_Int *p_arg1, FT_Int *p_arg2, FT_Matrix *p_transform);
 	}
 
 	[CRepr]
@@ -462,45 +408,5 @@ namespace FreeType
     	public FT_UInt   num_layers;
     	public FT_UInt   layer;
     	public FT_Byte*  p;
-	}
-
-	static
-	{
-		[CLink]
-		public static extern FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, FT_UInt base_glyph, FT_UInt *aglyph_index, FT_UInt *acolor_index, FT_LayerIterator* iterator);
-
-		public const uint32 FT_FSTYPE_INSTALLABLE_EMBEDDING 		= 0x0000;
-		public const uint32 FT_FSTYPE_RESTRICTED_LICENSE_EMBEDDING 	= 0x0002;
-		public const uint32 FT_FSTYPE_PREVIEW_AND_PRINT_EMBEDDING 	= 0x0004;
-		public const uint32 FT_FSTYPE_EDITABLE_EMBEDDING 			= 0x0008;
-		public const uint32 FT_FSTYPE_NO_SUBSETTING 				= 0x0100;
-		public const uint32 FT_FSTYPE_BITMAP_EMBEDDING_ONLY 		= 0x0200;
-		
-		[CLink]
-		public static extern FT_UShort FT_Get_FSType_Flags(FT_Face face);
-
-		[CLink]
-		public static extern FT_UInt FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
-		
-		[CLink]
-		public static extern FT_Int FT_Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
-		
-		[CLink]
-		public static extern FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face);
-		
-		[CLink]
-		public static extern FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode);
-		
-		[CLink]
-		public static extern FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector);
-		
-		[CLink]
-		public static extern void FT_Library_Version(FT_Library library, FT_Int *amajor, FT_Int *aminor, FT_Int *apatch);
-		
-		[CLink]
-		public static extern FT_Bool FT_Face_CheckTrueTypePatents(FT_Face face);
-		
-		[CLink]
-		public static extern FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value);
 	}
 }
