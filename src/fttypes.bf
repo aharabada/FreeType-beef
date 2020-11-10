@@ -38,7 +38,7 @@ namespace FreeType
 		public override void ToString(String strBuffer)
 		{
 			// Todo: check if error strings are activated
-			strBuffer.Append(FreeType.FT_Error_String(this));
+			strBuffer.Append(FreeType.Error_String(this));
 		}
 	}
 

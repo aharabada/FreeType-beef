@@ -18,20 +18,6 @@ namespace FreeType
 		public FT_Pos xMax, yMax;
 	}
 
-	public enum FT_Pixel_Mode : char8
-	{
-		FT_PIXEL_MODE_NONE = 0,
-		FT_PIXEL_MODE_MONO,
-		FT_PIXEL_MODE_GRAY,
-		FT_PIXEL_MODE_GRAY2,
-		FT_PIXEL_MODE_GRAY4,
-		FT_PIXEL_MODE_LCD,
-		FT_PIXEL_MODE_LCD_V,
-		FT_PIXEL_MODE_BGRA,
-
-		FT_PIXEL_MODE_MAX
-	}
-	
 	[CRepr]
 	public struct FT_Bitmap
 	{
@@ -40,7 +26,7 @@ namespace FreeType
     	public int32  pitch;
     	public uint8* buffer;
     	public uint16 num_grays;
-    	public FT_Pixel_Mode  pixel_mode; // char8
+    	public PixelMode  pixel_mode; // char8
     	public uint8  palette_mode;
     	public void*  palette;
 	}
@@ -98,14 +84,5 @@ namespace FreeType
 		public const int FT_Curve_Tag_Touch_Y = FT_CURVE_TAG_TOUCH_Y;
 	}
 
-	// Todo: finish
-
-	public enum FT_Glyph_Format : uint32
-	{
-		FT_GLYPH_FORMAT_NONE = 0,
-		FT_GLYPH_FORMAT_COMPOSITE = ((.)'c' << 24) | ((.)'o' << 16) | ((.)'m' << 8) | (.)'p',//'c', 'o', 'm', 'p',
-		FT_GLYPH_FORMAT_BITMAP    = ((.)'b' << 24) | ((.)'i' << 16) | ((.)'t' << 8) | (.)'s',   //'b', 'i', 't', 's',
-		FT_GLYPH_FORMAT_OUTLINE   = ((.)'o' << 24) | ((.)'u' << 16) | ((.)'t' << 8) | (.)'l',  //'o', 'u', 't', 'l',
-		FT_GLYPH_FORMAT_PLOTTER   = ((.)'p' << 24) | ((.)'l' << 16) | ((.)'o' << 8) | (.)'t'  //'p', 'l', 'o', 't'
-	}
+	// Todo: finish (FT_Glyph_Format)
 }

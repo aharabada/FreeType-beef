@@ -7,7 +7,7 @@ namespace FreeType
 	{
 		void*  module_data;
 
-		FT_Render_Mode   autohint_mode;
+		RenderMode   autohint_mode;
 		FT_Size_Metrics  autohint_metrics;
 	}
 

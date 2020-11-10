@@ -53,7 +53,7 @@ namespace FreeType
 		public static extern void Set_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
 
 		[LinkName("FT_Render_Glyph")]
-		public static extern FT_Error Render_Glyph(FT_GlyphSlot slot, FT_Render_Mode render_mode);
+		public static extern FT_Error Render_Glyph(FT_GlyphSlot slot, RenderMode render_mode);
 
 		[LinkName("FT_Get_Kerning")]
 		public static extern FT_Error Get_Kerning(FT_Face face, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt kern_mode, FT_Vector *akerning );
@@ -68,7 +68,7 @@ namespace FreeType
 		public static extern char8* Get_Postscript_Name(FT_Face face);
 
 		[LinkName("FT_Select_Charmap")]
-		public static extern FT_Error Select_Charmap(FT_Face face, FT_Encoding encoding);
+		public static extern FT_Error Select_Charmap(FT_Face face, Encoding encoding);
 
 		[LinkName("FT_Set_Charmap")]
 		public static extern FT_Error Set_Charmap(FT_Face face, FT_CharMap charmap);
@@ -80,10 +80,10 @@ namespace FreeType
 		public static extern FT_UInt Get_Char_Index(FT_Face face, /*FT_ULong*/ char32 charcode);
 
 		[LinkName("FT_Get_First_Char")]
-		public static extern FT_ULong Get_First_Char(FT_Face face, FT_UInt *agindex);
+		public static extern /*FT_ULong*/ char32 Get_First_Char(FT_Face face, FT_UInt *agindex);
 
 		[LinkName("FT_Get_Next_Char")]
-		public static extern FT_ULong Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt *agindex);
+		public static extern /*FT_ULong*/ char32 Get_Next_Char(FT_Face face, /*FT_ULong*/ char32 char_code, FT_UInt *agindex);
 
 		[LinkName("FT_Face_Properties")]
 		public static extern FT_Error Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties);
@@ -101,16 +101,16 @@ namespace FreeType
 		public static extern FSTypeFlag Get_FSType_Flags(FT_Face face);
 
 		[LinkName("FT_Face_GetCharVariantIndex")]
-		public static extern FT_UInt Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
+		public static extern FT_UInt Face_GetCharVariantIndex(FT_Face face, /*FT_ULong*/ char32 charcode, FT_ULong variantSelector);
 
 		[LinkName("FT_Face_GetCharVariantIsDefault")]
-		public static extern FT_Int Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
+		public static extern FT_Int Face_GetCharVariantIsDefault(FT_Face face, /*FT_ULong*/ char32 charcode, FT_ULong variantSelector);
 
 		[LinkName("FT_Face_GetVariantSelectors")]
 		public static extern FT_UInt32* Face_GetVariantSelectors(FT_Face face);
 
 		[LinkName("FT_Face_GetVariantsOfChar")]
-		public static extern FT_UInt32* Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode);
+		public static extern FT_UInt32* Face_GetVariantsOfChar(FT_Face face, /*FT_ULong*/ char32 charcode);
 
 		[LinkName("FT_Face_GetCharsOfVariant")]
 		public static extern FT_UInt32* Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector);
@@ -123,6 +123,17 @@ namespace FreeType
 
 		[LinkName("FT_Face_SetUnpatentedHinting")]
 		public static extern FT_Bool Face_SetUnpatentedHinting(FT_Face face, FT_Bool value);
+
+		
+		/**
+		 * Retrieve the description of a valid FreeType error code.
+		 * @param error_code A valid FreeType error code.
+		 * @returns A C string or NULL, if any error occurred.
+		 *
+		 * @remarks FreeType has to be compiled with FT_CONFIG_OPTION_ERROR_STRINGS or FT_DEBUG_LEVEL_ERROR to get meaningful descriptions. ‘error_string’ will be NULL otherwise.
+		*/
+		[LinkName("FT_Error_String")]
+		public static extern char8* Error_String(FT_Error error_code);
 	}
 
 	//
@@ -176,43 +187,11 @@ namespace FreeType
 	
 	typealias FT_CharMap = FT_CharMapRec*;
 
-	[AllowDuplicates]
-	public enum FT_Encoding : FT_UInt32
-	{
-		FT_ENCODING_NONE = 0,
-
-		FT_ENCODING_MS_SYMBOL = ((.)'s' << 24) | ((.)'y' << 16) | ((.)'m' << 8 ) | (.)'b',
-		FT_ENCODING_UNICODE = ((.)'u' << 24) | ((.)'n' << 16) | ((.)'i' << 8 ) | (.)'c',
-
-		FT_ENCODING_SJIS = ((.)'s' << 24) | ((.)'j' << 16) | ((.)'i' << 8 ) | (.)'s', //   's', 'j', 'i', 's'
-		FT_ENCODING_PRC = ((.)'g' << 24) | ((.)'b' << 16) | ((.)' ' << 8 ) | (.)' ', //     'g', 'b', ' ', ' '
-		FT_ENCODING_BIG5 = ((.)'b' << 24) | ((.)'i' << 16) | ((.)'g' << 8 ) | (.)'5', //    'b', 'i', 'g', '5'
-		FT_ENCODING_WANSUNG = ((.)'w' << 24) | ((.)'a' << 16) | ((.)'n' << 8 ) | (.)'s', // 'w', 'a', 'n', 's'
-		FT_ENCODING_JOHAB = ((.)'j' << 24) | ((.)'o' << 16) | ((.)'h' << 8 ) | (.)'a', //   'j', 'o', 'h', 'a'
-		
-		/* for backward compatibility */
-		FT_ENCODING_GB2312     = FT_ENCODING_PRC,
-		FT_ENCODING_MS_SJIS    = FT_ENCODING_SJIS,
-		FT_ENCODING_MS_GB2312  = FT_ENCODING_PRC,
-		FT_ENCODING_MS_BIG5    = FT_ENCODING_BIG5,
-		FT_ENCODING_MS_WANSUNG = FT_ENCODING_WANSUNG,
-		FT_ENCODING_MS_JOHAB   = FT_ENCODING_JOHAB,
-
-		FT_ENCODING_ADOBE_STANDARD= ((.)'A' << 24) | ((.)'D' << 16) | ((.)'O' << 8 ) | (.)'B', //    'A', 'D', 'O', 'B' ),
-		FT_ENCODING_ADOBE_EXPERT= ((.)'A' << 24) | ((.)'D' << 16) | ((.)'B' << 8 ) | (.)'E', //      'A', 'D', 'B', 'E' ),
-		FT_ENCODING_ADOBE_CUSTOM= ((.)'A' << 24) | ((.)'D' << 16) | ((.)'B' << 8 ) | (.)'C', //      'A', 'D', 'B', 'C' ),
-		FT_ENCODING_ADOBE_LATIN_1 = ((.)'l' << 24) | ((.)'a' << 16) | ((.)'t' << 8 ) | (.)'1', //     'l', 'a', 't', '1' ),
-
-		FT_ENCODING_OLD_LATIN_2 = ((.)'l' << 24) | ((.)'a' << 16) | ((.)'t' << 8 ) | (.)'2', //    'l', 'a', 't', '2' ),
-
-		FT_ENCODING_APPLE_ROMAN = ((.)'a' << 24) | ((.)'r' << 16) | ((.)'m' << 8 ) | (.)'n', //    'a', 'r', 'm', 'n' )
-	}
-
 	[CRepr]
 	public struct FT_CharMapRec
 	{
     	public FT_Face      face;
-    	public FT_Encoding  encoding;
+    	public Encoding     encoding;
     	public FT_UShort    platform_id;
     	public FT_UShort    encoding_id;
 	}
@@ -319,7 +298,7 @@ namespace FreeType
 		public FT_Fixed          linearVertAdvance;
 		public FT_Vector         advance;
 
-		public FT_Glyph_Format   format;
+		public GlyphFormat   format;
 
 		public FT_Bitmap         bitmap;
 		public FT_Int            bitmap_left;
@@ -361,21 +340,10 @@ namespace FreeType
 		public FT_Parameter*   ftparams;
 	}
 
-	public enum FT_Size_Request_Type : uint32
-	{
-		FT_SIZE_REQUEST_TYPE_NOMINAL,
-		FT_SIZE_REQUEST_TYPE_REAL_DIM,
-		FT_SIZE_REQUEST_TYPE_BBOX,
-		FT_SIZE_REQUEST_TYPE_CELL,
-		FT_SIZE_REQUEST_TYPE_SCALES,
-
-		FT_SIZE_REQUEST_TYPE_MAX
-	}
-
 	[CRepr]
 	public struct FT_Size_RequestRec
 	{
-		public FT_Size_Request_Type  type;
+		public SizeRequestType       type;
 		public FT_Long               width;
 		public FT_Long               height;
 		public FT_UInt               horiResolution;
@@ -383,24 +351,6 @@ namespace FreeType
 	}
 
 	typealias FT_Size_Request = FT_Size_RequestRec*;
-
-	public enum FT_Render_Mode : uint32
-	{
-	  FT_RENDER_MODE_NORMAL = 0,
-	  FT_RENDER_MODE_LIGHT,
-	  FT_RENDER_MODE_MONO,
-	  FT_RENDER_MODE_LCD,
-	  FT_RENDER_MODE_LCD_V,
-
-	  FT_RENDER_MODE_MAX
-	}
-
-	public enum FT_Kerning_Mode : uint32
-	{
-		FT_KERNING_DEFAULT = 0,
-		FT_KERNING_UNFITTED,
-		FT_KERNING_UNSCALED
-	}
 
 	[CRepr]
 	public struct FT_LayerIterator

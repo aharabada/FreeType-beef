@@ -1,4 +1,5 @@
 using System;
+
 namespace FreeType
 {
 	/// FT_FACE_FLAG_XXX
@@ -87,15 +88,15 @@ namespace FreeType
 		NoAutohint                 = 1L << 15,
 
 		/// FT_LOAD_TARGET_NORMAL              
-		TargetNormal               = ((.)FT_Render_Mode.FT_RENDER_MODE_NORMAL & 15) << 16,
+		TargetNormal               = ((.)RenderMode.Normal & 15) << 16,
 		/// FT_LOAD_TARGET_LIGHT               
-		TargetLight                = ((.)FT_Render_Mode.FT_RENDER_MODE_LIGHT & 15) << 16,
+		TargetLight                = ((.)RenderMode.Light & 15) << 16,
 		/// FT_LOAD_TARGET_MONO                
-		TargetMono                 = ((.)FT_Render_Mode.FT_RENDER_MODE_MONO & 15) << 16,
+		TargetMono                 = ((.)RenderMode.Mono & 15) << 16,
 		/// FT_LOAD_TARGET_LCD                 
-		TargetLcd                  = ((.)FT_Render_Mode.FT_RENDER_MODE_LCD & 15) << 16,
+		TargetLcd                  = ((.)RenderMode.Lcd & 15) << 16,
 		/// FT_LOAD_TARGET_LCD_V               
-		TargetLcdV                = ((.)FT_Render_Mode.FT_RENDER_MODE_LCD_V & 15) << 16,
+		TargetLcdV                = ((.)RenderMode.LcdV & 15) << 16,
 
 		/// FT_LOAD_COLOR                      
 		Color                       = 1L << 20,
