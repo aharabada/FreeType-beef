@@ -380,6 +380,9 @@ namespace FreeType
 		[CLink]
 		public static extern void hb_font_get_scale(hb_font_t* font, out int32 x_scale, out int32 y_scale);
 		
+		[CLink]
+		public static extern hb_font_t* hb_ft_font_create_referenced(FT_Face ft_face);
+
 		public static void Test()
 		{
 			String str = "Hallo";
