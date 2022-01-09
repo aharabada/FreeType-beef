@@ -5,7 +5,7 @@ Dependencies = {corlib = "*", corlib = "*"}
 Name = "FreeType"
 
 [Configs.Debug.Win64]
-LibPaths = ["$(ProjectDir)\\dist\\win64\\freetype.lib", "$(ProjectDir)\\dist\\win64\\harfbuzz.lib"]
+LibPaths = ["$(ProjectDir)\\dist\\win64\\freetype.lib", "$(ProjectDir)\\dist\\win64\\harfbuzz.lib", "$(ProjectDir)\\dist\\win64\\fribidi.lib"]
 PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]
 
 [Configs.Release.Win64]

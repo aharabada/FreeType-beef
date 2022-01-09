@@ -439,6 +439,12 @@ namespace FreeType
 
 		[CLink]
 		public static extern void hb_buffer_add_utf8(hb_buffer_t* buffer, [MangleConst]char8* text, int32 text_length, uint32 item_offset, int32 item_length);
+		
+		[CLink]
+		public static extern void hb_buffer_add_utf16(hb_buffer_t* buffer, [MangleConst]char16* text, int32 text_length, uint32 item_offset, int32 item_length);
+		
+		[CLink]
+		public static extern void hb_buffer_add_utf32(hb_buffer_t* buffer, [MangleConst]char32* text, int32 text_length, uint32 item_offset, int32 item_length);
 
 		[CLink]
 		public static extern void hb_buffer_set_direction(hb_buffer_t* buffer, hb_direction_t direction);
