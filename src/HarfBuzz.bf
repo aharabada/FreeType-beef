@@ -463,7 +463,13 @@ namespace FreeType
 
 		[CLink]
 		public static extern hb_face_t* hb_face_create(hb_blob_t* blob, uint32 index);
-		
+
+		[CLink]
+		public static extern hb_face_t* hb_font_get_face(hb_font_t* font);
+
+		[CLink]
+		public static extern uint32 hb_face_get_upem(hb_face_t* face);
+
 		public struct hb_font_t;
 		
 		[CLink]
@@ -532,9 +538,26 @@ namespace FreeType
 
 		[CLink]
 		public static extern void hb_font_get_scale(hb_font_t* font, out int32 x_scale, out int32 y_scale);
+
+		[CLink]
+		public static extern hb_bool_t hb_font_get_h_extents(hb_font_t *font, hb_font_extents_t* extents);
 		
 		[CLink]
+		public static extern hb_bool_t hb_font_get_v_extents(hb_font_t *font, hb_font_extents_t* extents);
+
+		[CRepr]
+		public struct hb_font_extents_t
+		{
+			public hb_position_t ascender;
+		  	public hb_position_t descender;
+		  	public hb_position_t line_gap;
+		};
+
+		[CLink]
 		public static extern hb_font_t* hb_ft_font_create_referenced(FT_Face ft_face);
+
+		[CLink]
+		public static extern hb_face_t* hb_ft_face_create_referenced(FT_Face ft_face);
 
 		public static void Test()
 		{
