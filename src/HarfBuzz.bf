@@ -100,7 +100,7 @@ namespace FreeType
 		[CLink]
 		public static extern hb_language_t hb_language_get_default();
 
-		
+		[AllowDuplicates]
 		public enum hb_script_t : uint32
 		{
 			case HB_SCRIPT_COMMON			= HB_TAG ('Z','y','y','y'); /*1.1*/
